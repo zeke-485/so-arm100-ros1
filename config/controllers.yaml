@@ -1,0 +1,35 @@
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+so_100_arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+    - shoulder_pan
+    - shoulder_lift
+    - elbow_flex
+    - wrist_flex
+    - wrist_roll
+  gains:
+    shoulder_pan: {p: 100, i: 0.01, d: 1}
+    shoulder_lift: {p: 100, i: 0.01, d: 1}
+    elbow_flex: {p: 100, i: 0.01, d: 1}
+    wrist_flex: {p: 100, i: 0.01, d: 1}
+    wrist_roll: {p: 100, i: 0.01, d: 1}
+  state_publish_rate: 50
+  constraints:
+    goal_time: 4.0   # Time to reach goal (bigger = slower)
+    stopped_velocity_tolerance: 0.01
+    shoulder_pan: {trajectory: 0.5, goal: 0.1}
+    shoulder_lift: {trajectory: 0.5, goal: 0.1}
+    elbow_flex: {trajectory: 0.5, goal: 0.1}
+    wrist_flex: {trajectory: 0.5, goal: 0.1}
+    wrist_roll: {trajectory: 0.5, goal: 0.1}
+  trajectory_limits:
+    max_velocity: 0.5      # Lower = slower
+    max_acceleration: 0.25 # Lower = smoother & slower start/stop
+
+so_100_gripper_controller:
+  type: position_controllers/JointPositionController
+  joint: gripper
+  pid: {p: 50, i: 0.01, d: 0.5}

@@ -1,0 +1,40 @@
+<launch>
+  <!-- =========================
+       Load robot description
+       ========================= -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find arm100_description)/urdf/so100.urdf'" />
+
+  <!-- =========================
+       Load controller configs
+       ========================= -->
+  <rosparam file="$(find arm100_hardware)/config/controllers.yaml" command="load" />
+
+  <!-- =========================
+       Start hardware interface node
+       ========================= -->
+  <node name="so_arm_100_hw_node"
+        pkg="arm100_hardware"
+        type="so_arm_100_hw_node"
+        output="screen">
+    <param name="serial_port" value="/dev/ttyACM1" />
+    <param name="serial_baudrate" value="1000000" />
+    <param name="use_sim_time" value="false" />
+  </node>
+
+  <!-- =========================
+       Spawn controllers
+       ========================= -->
+  <node name="controller_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        args="joint_state_controller so_100_arm_controller so_100_gripper_controller"
+        output="screen" />
+
+  <!-- =========================
+       Send initial zero pose to joints
+       ========================= -->
+  <node name="send_initial_pose"
+        pkg="arm100_hardware"
+        type="send_initial_pose.py"
+        output="screen" />
+</launch>

@@ -1,0 +1,7 @@
+<library path="lib/libso_arm_100_hardware">
+  <class name="so_arm_100_controller/SOARM100Interface"
+         type="so_arm_100_hardware::SOARM100Interface"
+         base_class_type="hardware_interface::RobotHW">
+    <description>SO-ARM-100 Hardware Interface</description>
+  </class>
+</library>

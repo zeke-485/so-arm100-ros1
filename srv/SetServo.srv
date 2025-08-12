@@ -1,0 +1,6 @@
+uint8 id         # servo ID, e.g., 1..6
+int32 position   # target position in ticks (0-4095)
+---
+bool success
+string message
+

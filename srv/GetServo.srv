@@ -1,0 +1,6 @@
+uint8 id         # servo ID
+---
+int32 position   # current position in ticks (-1 if error)
+bool success
+string message
+
